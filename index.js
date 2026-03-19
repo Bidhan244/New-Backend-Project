@@ -1,17 +1,21 @@
 const express = require('express');
-const { connect } = require('mongoose');
-const { connectToDataBase } = require('./controller/db/db');
+
 const dotenv = require('dotenv');
+const { connectToDataBase } = require('./db/db');
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
-connectToDataBase ();
+connectToDataBase();
+
+app.use("/api/auth", require("./routes/userRoute"));
 
 const PORT = process.env.PORT;
 
+
 app.listen (PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`)
 });
 
 app.get('/', (req, res) => {
